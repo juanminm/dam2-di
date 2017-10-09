@@ -10,11 +10,13 @@ while i <= limit:
     if num % i == 0:
         lista.append(i)
 
-        # Añadiendo a lo de arriba: si numero / i = j, numero / j = i.
-        #
-        # En caso de cuadrados perfectos (4, 9, 16,...), se omite j cuando es igual a i para que no haya
-        # repeticiones como en el caso de 4 que mostraría dos 2's.
+        # Añadiendo a lo de arriba: si el numero divisido por i da resto 0,
+		# entonces el resultado es un divisor también.
         j = num/i
+
+        # En caso de cuadrados perfectos (4, 9, 16,...), se omite j cuando es
+        # igual a i para que no haya repeticiones; como en el caso de 4 que
+        # mostraría dos 2.
         if (i != j):
             lista.append(int(num/i))
 
