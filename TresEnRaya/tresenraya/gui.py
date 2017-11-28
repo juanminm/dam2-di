@@ -1,8 +1,8 @@
-from tkinter import *
+import tkinter
 
 class MainWindow:
     def __init__(self):
-        self.window = Tk()
+        self.window = tkinter.Tk()
         Grid(self.window, 3);
         self.window.mainloop()
 
@@ -14,7 +14,7 @@ class Grid:
 
         for i in range(grid_size):
             for j in range(grid_size):
-                self.squares[i][j] = Button(
+                self.squares[i][j] = tkinter.Button(
                     self.parent, textvariable=" ",
                     command=lambda i=i, j=j: self.choose_square(
                         self.choose_square(self.squares[i][j])
