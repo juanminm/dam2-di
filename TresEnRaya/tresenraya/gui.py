@@ -4,6 +4,11 @@ import tkinter
 class MainWindow:
     def __init__(self):
         self.window = tkinter.Tk()
+        self.window.resizable(width=False, height=False)
+        self.window.minsize(300, 200)
+        self.window.title = "Tic Tac Toe"
+        self.window.grid_rowconfigure(0, weight=1)
+        self.window.grid_columnconfigure(0, weight=1)
         ModeSelectionFrame(self.window);
         self.window.mainloop()
 
@@ -12,7 +17,7 @@ class ModeSelectionFrame:
     def __init__(self, parent):
         self.parent = parent
         self.frame = tkinter.Frame(parent)
-        self.frame.pack()
+        self.frame.pack(fill="none", expand=True)
 
         self.one_player_button = tkinter.Button(
             self.frame,
@@ -68,7 +73,7 @@ class GridFrame:
         self.squares = [[None for i in range(grid_size)] for i in
                         range(grid_size)]
 
-        self.frame.pack()
+        self.frame.pack(fill="none", expand=True)
 
         for i in range(grid_size):
             for j in range(grid_size):
