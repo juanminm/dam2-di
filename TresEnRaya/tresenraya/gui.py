@@ -61,9 +61,8 @@ class GridSelectionFrame:
 
         if size == '\n':
             change_frame(self.frame, GridFrame(self.parent))
-        elif isinstance(size, int):
-            change_frame(self.frame, GridFrame(self.parent, size))
-
+        elif is_int(size):
+            change_frame(self.frame, GridFrame(self.parent, int(size)))
 
 
 class GridFrame:
@@ -99,6 +98,14 @@ class Square:
 def change_frame(current_frame, next_frame):
     current_frame.destroy()
     next_frame
+
+
+def is_int(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
 
 
 def makeMove():
