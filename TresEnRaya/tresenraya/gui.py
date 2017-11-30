@@ -84,11 +84,12 @@ class Square:
         self.parent = parent
         self.row = row
         self.column = column
+        self.marca = tkinter.StringVar()
 
         self.button = tkinter.Button(
             self.parent,
-            textvariable=" ",
-            command=lambda: makeMove(),
+            textvariable=self.marca,
+            command=lambda: make_move(self),
             width=4, height=4
         )
 
@@ -108,6 +109,7 @@ def is_int(value):
         return False
 
 
-def makeMove():
-    # TODO
+def make_move(square):
+    square.marca.set("O")
+    square.button.config(state=tkinter.DISABLED)
     pass
