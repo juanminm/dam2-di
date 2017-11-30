@@ -77,10 +77,10 @@ class GridFrame:
 
         for i in range(grid_size):
             for j in range(grid_size):
-                self.squares[i][j] = Cell(self.frame, i, j)
+                self.squares[i][j] = Square(self.frame, i, j)
 
 
-class Cell:
+class Square:
     def __init__(self, parent, row, column):
         self.parent = parent
         self.row = row
