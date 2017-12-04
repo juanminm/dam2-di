@@ -144,4 +144,3 @@ def make_move(square):
         turn_manager.change_turn(game_manager.player1)
 
     square.button.config(state=tkinter.DISABLED)
-    pass
