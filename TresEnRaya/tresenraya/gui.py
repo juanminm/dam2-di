@@ -4,6 +4,7 @@ import tresenraya.managers
 import tresenraya.players
 
 game_manager = tresenraya.managers.GameManager()
+turn_manager = tresenraya.managers.TurnManager()
 
 
 class MainWindow:
@@ -97,6 +98,8 @@ class GridFrame:
 
         self.frame.pack(fill="none", expand=True)
 
+        game_manager.start_game(turn_manager)
+
         for i in range(game_manager.grid_size):
             for j in range(game_manager.grid_size):
                 self.squares[i][j] = Square(self.frame, i, j)
@@ -133,6 +136,12 @@ def is_int(value):
 
 
 def make_move(square):
-    square.marca.set("O")
+    if turn_manager.player == game_manager.player1:
+        square.marca.set(game_manager.player1_mark)
+        turn_manager.change_turn(game_manager.player2)
+    else:
+        square.marca.set(game_manager.player2_mark)
+        turn_manager.change_turn(game_manager.player1)
+
     square.button.config(state=tkinter.DISABLED)
     pass
