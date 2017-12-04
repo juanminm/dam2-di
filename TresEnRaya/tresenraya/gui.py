@@ -1,6 +1,9 @@
 import tkinter
 
+import tresenraya.managers
 import tresenraya.players
+
+game_manager = tresenraya.managers.GameManager()
 
 
 class MainWindow:
@@ -24,36 +27,30 @@ class ModeSelectionFrame:
         self.one_player_button = tkinter.Button(
             self.frame,
             text="One player",
-            command=lambda: change_frame(
-                self.frame,
-                GridSelectionFrame(
-                    self.parent,
-                    tresenraya.players.Human("Player 1"),
-                    tresenraya.players.CPU()
-                )
-            )
+            command=lambda: self.select_mode(True)
         )
         self.one_player_button.pack()
 
         self.two_players_button = tkinter.Button(
             self.frame,
             text="Two players",
-
-
-            command=lambda: change_frame(
-                self.frame,
-                GridSelectionFrame(
-                    self.parent,
-                    tresenraya.players.Human("Player 1"),
-                    tresenraya.players.Human("Player 2")
-                )
-            )
+            command=lambda: self.select_mode(False)
         )
         self.two_players_button.pack()
 
+    def select_mode(self, with_cpu):
+        if with_cpu:
+            game_manager.player1 = tresenraya.players.Human("Player 1")
+            game_manager.player2 = tresenraya.players.CPU()
+        else:
+            game_manager.player1 = tresenraya.players.Human("Player 1")
+            game_manager.player2 = tresenraya.players.Human("Player 2")
+
+        change_frame(self.frame, GridSelectionFrame(self.parent))
+
 
 class GridSelectionFrame:
-    def __init__(self, parent, player1, player2):
+    def __init__(self, parent):
         self.parent = parent
         self.frame = tkinter.Frame(parent)
         self.frame.pack(fill="none", expand=True)
@@ -70,38 +67,38 @@ class GridSelectionFrame:
         self.confirm_grid_size_button = tkinter.Button(
             self.frame,
             text="Confirm",
-            command=lambda: self.confirm_grid_size(player1, player2)
+            command=lambda: self.confirm_grid_size()
         )
         self.confirm_grid_size_button.pack()
 
-    def confirm_grid_size(self, player1, player2):
+    def confirm_grid_size(self):
         size = self.size_text.get("0.0", tkinter.END)
 
         if size == '\n':
             change_frame(
                 self.frame,
-                GridFrame(self.parent, player1, player2)
+                GridFrame(self.parent)
             )
         elif is_int(size):
+            game_manager.grid_size = int(size)
+
             change_frame(
                 self.frame,
-                GridFrame(self.parent, player1, player2, int(size))
+                GridFrame(self.parent)
             )
 
 
 class GridFrame:
-    def __init__(self, parent, player1, player2, grid_size=3):
+    def __init__(self, parent):
         self.parent = parent
         self.frame = tkinter.Frame(self.parent)
-        self.player1 = player1
-        self.player2 = player2
-        self.squares = [[None for i in range(grid_size)] for i in
-                        range(grid_size)]
+        self.squares = [[None for i in range(game_manager.grid_size)] for i in
+                        range(game_manager.grid_size)]
 
         self.frame.pack(fill="none", expand=True)
 
-        for i in range(grid_size):
-            for j in range(grid_size):
+        for i in range(game_manager.grid_size):
+            for j in range(game_manager.grid_size):
                 self.squares[i][j] = Square(self.frame, i, j)
 
 
